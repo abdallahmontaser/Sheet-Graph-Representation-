@@ -1,0 +1,45 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include<bits/stdc++.h>
+using namespace std;
+typedef vector<int> vi;
+void fast()
+{
+	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr), cout.tie(nullptr);
+}
+void solve()
+{
+	int P, temp, ans = INT_MAX; cin >> P;
+	string S;
+	cin.ignore();
+	vector<vi>DFS(P + 1);
+	vi answer;
+	for (int i = 1; i <= P; i++)
+	{
+		getline(cin, S);
+		stringstream tem(S);
+		while (tem >> temp)
+			DFS[i].push_back(temp);
+		ans = min(ans, (int)DFS[i].size());
+	}
+	for (int i = 1; i <= P; i++)
+	{
+		if (DFS[i].size() == ans)
+			answer.push_back(i);
+	}
+	for (int i = 0; i < answer.size(); i++)
+	{
+		if (!i)
+			cout << answer[i];
+		else
+			cout << " " << answer[i];
+	}
+	cout << "\n";
+}
+int main()
+{
+	fast();
+	int T = 1; cin >> T;
+	while (T--)
+		solve();
+}
