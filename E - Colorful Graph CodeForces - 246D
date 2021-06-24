@@ -1,0 +1,38 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef vector<int> vi;
+void fast()
+{
+	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr), cout.tie(nullptr);
+}
+void solve()
+{
+	int N, M, u, v, ans = INT_MAX, mx_si = INT_MIN; cin >> N >> M;
+	vi colors(N);
+	vector<set<int>>ve(1e5 + 2);
+	for (auto& i : colors)
+		cin >> i;
+	for (int i = 0; i < M; i++)
+	{
+		cin >> u >> v;
+		u--, v--;
+		if (colors[u] != colors[v])
+			ve[colors[u]].insert(colors[v]), ve[colors[v]].insert(colors[u]);
+	}
+	for (int i = 0; i < N; i++)
+	{
+		if ((int)ve[colors[i]].size() > mx_si)
+			mx_si = (int)ve[colors[i]].size(), ans = colors[i];
+		else if ((int)ve[colors[i]].size() == mx_si)
+			ans = min(ans, colors[i]);
+	}
+	cout << ans;
+}
+int main()
+{
+	fast();
+	int T = 1;
+	while (T--)
+		solve();
+}
