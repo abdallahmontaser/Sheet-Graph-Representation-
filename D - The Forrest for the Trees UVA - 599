@@ -1,0 +1,57 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef vector<int> vi;
+void fast()
+{
+	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr), cout.tie(nullptr);
+}
+vector<vi>adj;
+vector<bool>vis;
+int counter ;
+void dfs(int node)
+{
+	counter++;
+	vis[node] = true;
+	for (int i = 0; i < adj[node].size(); i++)
+	{
+		if (!vis[adj[node][i]])
+			dfs(adj[node][i]);
+	}
+}
+void solve()
+{
+	int cnt = 0, tree = 0, acorn = 0, tem;
+	string S, nodes;
+	vector<string>edgs;
+	map<char, int>ma;
+	while (cin >> S && S[0] != '*')
+		 edgs.push_back(S);
+	cin >> nodes;
+	for (int i = 0; i < nodes.size(); i += 2)
+		ma[nodes[i]] = cnt++;
+	adj = vector<vi>(cnt);
+	vis = vector<bool>(cnt, false);
+	for (int i = 0; i < edgs.size(); i++)
+		adj[ma[edgs[i][1]]].push_back(ma[edgs[i][3]]), adj[ma[edgs[i][3]]].push_back(ma[edgs[i][1]]);
+	for (int i = 0; i < cnt; i++)
+	{
+		if (!vis[i])
+		{
+			counter = 0;
+			 dfs(i);
+			 if (counter == 1)
+				acorn++;
+			else
+				tree++;
+		}
+	}
+	cout << "There are " << tree << " tree(s) and " << acorn << " acorn(s).\n";
+}
+int main()
+{
+	fast();
+	int T = 1; cin >> T;
+	while (T--)
+		solve();
+}
